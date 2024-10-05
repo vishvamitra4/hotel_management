@@ -6,17 +6,19 @@ const schema = new Schema({
         type: String,
         minLength : 1,
         maxLength : 60,
-        required: true
+        required: true,
+        unique : true
     },
     hotelStar: {
         type: Number,
         required: true,
         min: 1,
-        max: 8
+        max: 8,
+        default : 1
     },
     hotelRating: {
         type: Number,
-        default: 0,
+        default: 5,
         min: 0,
         max: 5
     },
@@ -29,7 +31,7 @@ const schema = new Schema({
         default: []
     },
     hotelImages: {
-        type: [String], // Array of url if images..
+        type: [String],
         default: []
     },
     hotelStreet: {
@@ -73,6 +75,10 @@ const schema = new Schema({
         roomType: {
             type: String,
             required: true
+        },
+        roomDetail : {
+            type : String,
+            required : true,
         },
         totalRooms: {
             type: Number,

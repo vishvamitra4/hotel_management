@@ -14,6 +14,7 @@ class Login extends Base {
         if (error) {
             this.throwError("201", "Input Data is not validated");
         };
+
         // cheking whether input email is present or not...
         const user = await this.models.User.findOne({ userEmail: value.userEmail });
         if (user) {
@@ -27,7 +28,10 @@ class Login extends Base {
                 this.ctx.body = {
                     success: true,
                     message: "user login successfull",
-                    data: { user }
+                    data: {
+                        user : user,
+                        flag : (user.userEmail === this.config.admin.email) ? true : false
+                    }
                 };
             }else this.throwError("201" , "Password is wrong!");
         } else {

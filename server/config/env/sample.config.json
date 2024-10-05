@@ -2,10 +2,10 @@
     "mongo_instances": {
         "primary_1": {
             "connect": false,
-            "db": "sampledb",
+            "db": "hotelTest",
             "host": "localhost",
-            "user": "sampledb",
-            "pass": "sampledb",
+            "user": "",
+            "pass": "",
             "options": ""
         }
     },
@@ -34,5 +34,9 @@
     },
     "jwt": {
         "secretKey": "justanrandomnumberasjfsthingads@ksnskf"
+    },
+    "admin" : {
+        "email" : "vishvamitra@gmail.com",
+        "password" : "vishvamitra@2000"
     }
 }

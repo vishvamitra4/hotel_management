@@ -1,4 +1,5 @@
 module.exports = {
     Status : require('./status'),
-    Auth : require('./auth')
+    Auth : require('./auth'),
+    Admin : require('./admin')
 };
