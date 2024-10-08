@@ -35,7 +35,7 @@ const schema = new Schema({
         default: []
     },
     hotelStreet: {
-        type: String,
+        type: String, 
         required: true
     },
     hotelCity: {

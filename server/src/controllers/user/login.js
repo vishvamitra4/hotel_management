@@ -31,7 +31,8 @@ class Login extends Base {
                     data: {
                         user : user,
                         flag : (user.userEmail === this.config.admin.email) ? true : false
-                    }
+                    },
+                    userToken : token
                 };
             }else this.throwError("201" , "Password is wrong!");
         } else {

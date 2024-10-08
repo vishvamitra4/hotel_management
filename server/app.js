@@ -6,26 +6,26 @@ const Utilities = require('./src/utilities');
 
 // requirinng config files...
 const config = require(`./config/env/${env}.config.json`);
-Utilities.Registry._set("config" , config);
-Utilities.Registry._set("env" , env);
+Utilities.Registry._set("config", config);
+Utilities.Registry._set("env", env);
 
 
 // creating mongo connection..
-const mongoDbConnection = (new Utilities.Client.MongoDB.Client(Utilities.Registry._get("config")["mongo_instances"]["primary_1"] , {})).connect();
-Utilities.Registry._set("monogoDB" , mongoDbConnection);
+const mongoDbConnection = (new Utilities.Client.MongoDB.Client(Utilities.Registry._get("config")["mongo_instances"]["primary_1"], {})).connect();
+Utilities.Registry._set("monogoDB", mongoDbConnection);
 
 
 // importing all schemas...
 const schemaList = require('./src/models');
-Utilities.Registry._set('schemaList' , schemaList);
+Utilities.Registry._set('schemaList', schemaList);
 
 
 // generating all models...
 let models = {};
-_.each(schemaList , (value , key)=>{
-    models[key] = mongoDbConnection.model(key , value.Schema);
+_.each(schemaList, (value, key) => {
+    models[key] = mongoDbConnection.model(key, value.Schema);
 });
-Utilities.Registry._set("models" , models);
+Utilities.Registry._set("models", models);
 
 
 // initializing the app..
@@ -47,7 +47,7 @@ app.use(async (ctx, next) => {
         ctx.status = error.status || 500;
         ctx.body = {
             success: false,
-            message: 'Internal Server error, dev team has been notified. Please try again after sometime!!'
+            error: { message: 'Internal Server error, dev team has been notified. Please try again after sometime!!' }
         };
         ctx.app.emit('error', error);
     }
