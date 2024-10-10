@@ -2,6 +2,7 @@ const _ = require('lodash');
 const Promise = require('bluebird');
 const Utilities = require('../utilities');
 const { ERROR_LIST } = require('./constants');
+const jwt = require("jsonwebtoken");
 
 
 class Base {
@@ -47,6 +48,22 @@ class Base {
         });
     };
 
+
+
+    // validating admin...
+    async validateAdmin() {
+        const token = this.ctx.cookies.get('userToken');
+        console.log(token);
+        console.log("Validating the Admin...");
+        if (token) {
+            const data = jwt.verify(token, this.config.jwt.secretKey);
+            if (data.userEmail !== this.config.admin.email) {
+                this.throwError("102", "Only Admin Can Add any hotel..");
+            };
+        } else {
+            this.throwError("102", "Please Login first");
+        }
+    }
 
     // this is a method for for executing a particular method over here.....
     async execute(methodName, ...args) {

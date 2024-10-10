@@ -1,9 +1,25 @@
+import React from "react";
 import Filter from "../components/Filter/filter";
-import { hotels } from "../assets/rawHotel";
 import HotelCard from "../components/hotelCard";
 import Navbar from "../components/navbar";
+import axios from "axios";
 
 function Home() {
+
+    const [hotels, setHotels] = React.useState([]);
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get("/fetch/hotels");
+                setHotels(data.data);
+            } catch (e) {
+                alert(e.response.data.error.message);
+            };
+        };
+        fetchData();
+    }, []);
+
     const allHotels = hotels.map((item, index) => {
         return <HotelCard hotel={item} key={index} />
     })

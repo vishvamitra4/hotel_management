@@ -29,7 +29,7 @@ const Register = () => {
         }
 
         try {
-            const { data } = await axios.post("http://localhost:400/register/user", {
+            const { data } = await axios.post("/register/user", {
                 userName, userEmail, userPassword, userPhoneNumber
             });
             alert(`${data.message}. You can now log in.`);

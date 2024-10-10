@@ -38,16 +38,18 @@ const Login = () => {
             const {data} = await axios.post("/login/user" , {
                 userEmail , userPassword
             });
+            
             setUser(data.data.user);
             setIsAdmin(data.data.flag);
             // setting the token to local storage..
             localStorage.setItem("userToken" , data.userToken);
+            localStorage.setItem("isAdmin" , data.data.flag);
             alert(data.message);
             setErrorMessage("");
             setFlag1(true);
         }catch(e){
             setUser(null);
-            localStorage.setItem("userToken" , "");
+            localStorage.clear();
             setIsAdmin(null);
             alert(e.response.data.error.message);
         }

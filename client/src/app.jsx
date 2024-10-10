@@ -5,12 +5,12 @@ import axios from "axios";
 import { UserContext } from "./contexts/user/userContext";
 
 axios.defaults.baseURL = "http://localhost:400";
-
+axios.defaults.withCredentials = true;
 
 
 function App() {
 
-  const { fetchUserData } = useContext(UserContext);
+  const { fetchUserData} = useContext(UserContext);
 
 
   React.useEffect(() => {

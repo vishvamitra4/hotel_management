@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function HotelCard({ hotel }) {
-    const { hotelName, hotelRating, hotelTags, hotelImages, hotelCity, hotelState, hotelRoomsDetail } = hotel;
+    const { _id, hotelName, hotelRating, hotelTags, hotelImages, hotelCity, hotelState, hotelRoomsDetail } = hotel;
     const [currentImage, setCurrentImage] = useState(0);
 
     // Calculate the average room cost
@@ -31,40 +32,40 @@ function HotelCard({ hotel }) {
                 />
                 <button
                     onClick={handlePrevImage}
-                    className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-[#1e3e62] text-white p-2 rounded-full hover:bg-[#ff6500] transition"
                 >
                     ◀
                 </button>
                 <button
                     onClick={handleNextImage}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#1e3e62] text-white p-2 rounded-full hover:bg-[#ff6500] transition"
                 >
                     ▶
                 </button>
             </div>
+            <Link to={`/hotel/${_id}`}>
+                <div className="px-6 py-4">
+                    <div className="font-bold text-lg mb-2 text-[#ff6500]">{hotelName}</div>
+                    <p className="text-[#1e3e62] text-base">
+                        {hotelCity}, {hotelState}
+                    </p>
+                    <p className="text-yellow-500 font-bold">⭐ {hotelRating}</p>
+                    <p className="text-[#0b192c] font-bold mt-2">Average Room Price: ${averageCost}</p>
+                </div>
 
-            <div className="px-6 py-4">
-                <div className="font-bold text-lg mb-2">{hotelName}</div>
-                <p className="text-gray-600 text-base">
-                    {hotelCity}, {hotelState}
-                </p>
-                <p className="text-yellow-500 font-bold">⭐ {hotelRating}</p>
-                <p className="text-gray-900 font-bold mt-2">Average Room Price: ${averageCost}</p>
-            </div>
-
-            <div className="px-6 pt-4 pb-2">
-                {hotelTags.map((tag, index) => (
-                    <span
-                        key={index}
-                        className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-600 mr-2 mb-2"
-                    >
-                        #{tag}
-                    </span>
-                ))}
-            </div>
+                <div className="px-6 pt-4 pb-2">
+                    {hotelTags.map((tag, index) => (
+                        <span
+                            key={index}
+                            className="inline-block bg-[#1e3e62] rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
+                        >
+                            #{tag}
+                        </span>
+                    ))}
+                </div>
+            </Link>
         </div>
     );
 };
-
 
 export default HotelCard;

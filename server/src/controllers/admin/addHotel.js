@@ -13,19 +13,6 @@ class AddHotel extends Base {
     };
 
 
-    // validating admin...
-    async validateAdmin() {
-        const token = this.ctx.cookies.get('userToken');
-        if (token) {
-            const data = jwt.verify(token, this.config.jwt.secretKey);
-            if (data.userEmail !== this.config.admin.email) {
-                this.throwError("102", "Only Admin Can Add any hotel..");
-            };
-        } else {
-            this.throwError("102", "Please Login first");
-        }
-    }
-
     // checking the hotel name is present in database or not...
     async checkingHotelName() {
         const { hotelName } = this.ctx.request.body;

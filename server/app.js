@@ -38,9 +38,15 @@ require('koa-qs')(app, 'extended');
 // cors moddleware...
 app.use(async (ctx, next) => {
     try {
-        ctx.set('Access-Control-Allow-Origin', '*');
-        ctx.set('Access-Control-Allow-Methods', '*');
-        ctx.set('Access-Control-Allow-Headers', '*');
+        const allowedOrigins = ['http://localhost:5174']; // Add your allowed origins here
+        const origin = ctx.request.header.origin;
+
+        if (allowedOrigins.includes(origin)) {
+            ctx.set('Access-Control-Allow-Origin', origin);
+        }
+        ctx.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+        ctx.set('Access-Control-Allow-Credentials', 'true')
         await next();
     } catch (error) {
         console.log('Process.Error', error);

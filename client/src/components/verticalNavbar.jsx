@@ -13,7 +13,7 @@ const Navbar = () => {
 
         try {
             await axios.post("/logout");
-            localStorage.setItem("userToken", "");
+            localStorage.clear();
             setUser(null);
             alert("Logout Successfull!");
             setFlag(true);
@@ -32,7 +32,7 @@ const Navbar = () => {
 
         <div className="bg-gray-800 w-64 h-screen space-y-6 py-7 px-2 fixed inset-y-0 left-0">
             {/* Name */}
-            <div className="text-white text-lg font-semibold px-4"><Link to={"/"}>Hotel Name</Link></div>
+            <div className="text-white text-lg font-semibold px-4"><Link to={"/"}>AirBNB</Link></div>
 
             {/* Navigation Links */}
             <nav className="space-y-4">

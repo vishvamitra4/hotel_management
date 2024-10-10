@@ -1,9 +1,9 @@
-export const hotels = [
+export const hotels = 
+[
     {
-        "_id": "64b1a7c6ab12ef001c1e2a01",
         "hotelName": "Ocean View Resort",
         "hotelStar": 5,
-        "hotelRating": 4.5,
+        "hotelRating": 5,
         "hotelDescription": "A luxury resort by the sea, offering stunning views and premium facilities.",
         "hotelTags": ["beachfront", "luxury", "spa"],
         "hotelImages": ["https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=800", "https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=800"],
@@ -41,7 +41,6 @@ export const hotels = [
         ]
     },
     {
-        "_id": "64b1a7c6ab12ef001c1e2a02",
         "hotelName": "Mountain Peak Lodge",
         "hotelStar": 4,
         "hotelRating": 4.0,
@@ -55,7 +54,7 @@ export const hotels = [
         "hotelGoogleMapUrl": "https://maps.google.com/mountainpeak",
         "hotelOwnerName": "Jane Smith",
         "hotelOwnerEmail": "janesmith@mountainpeak.com",
-        "hotelOwnerContacts": ["+1-234-567-8901"],
+        "hotelOwnerContacts": ["467846487"],
         "hotelRoomTypes": ["Cabin", "Suite"],
         "hotelRoomsDetail": [
             {
@@ -75,7 +74,6 @@ export const hotels = [
         ]
     },
     {
-        "_id": "64b1a7c6ab12ef001c1e2a03",
         "hotelName": "City Lights Hotel",
         "hotelStar": 3,
         "hotelRating": 3.8,
@@ -89,7 +87,7 @@ export const hotels = [
         "hotelGoogleMapUrl": "https://maps.google.com/citylights",
         "hotelOwnerName": "Michael Johnson",
         "hotelOwnerEmail": "michaeljohnson@citylights.com",
-        "hotelOwnerContacts": ["+1-345-678-9012"],
+        "hotelOwnerContacts": ["83758375683"],
         "hotelRoomTypes": ["Standard", "Executive"],
         "hotelRoomsDetail": [
             {
@@ -109,7 +107,6 @@ export const hotels = [
         ]
     },
     {
-        "_id": "64b1a7c6ab12ef001c1e2a04",
         "hotelName": "Desert Oasis Hotel",
         "hotelStar": 4,
         "hotelRating": 4.2,
@@ -123,7 +120,7 @@ export const hotels = [
         "hotelGoogleMapUrl": "https://maps.google.com/desertoasis",
         "hotelOwnerName": "Sarah Lee",
         "hotelOwnerEmail": "sarahlee@desertoasis.com",
-        "hotelOwnerContacts": ["+1-456-789-0123"],
+        "hotelOwnerContacts": ["85749857498749"],
         "hotelRoomTypes": ["Suite", "Standard"],
         "hotelRoomsDetail": [
             {
@@ -143,7 +140,6 @@ export const hotels = [
         ]
     },
     {
-        "_id": "64b1a7c6ab12ef001c1e2a05",
         "hotelName": "Countryside Inn",
         "hotelStar": 2,
         "hotelRating": 3.5,
@@ -157,7 +153,7 @@ export const hotels = [
         "hotelGoogleMapUrl": "https://maps.google.com/countrysideinn",
         "hotelOwnerName": "Paul Harris",
         "hotelOwnerEmail": "paulharris@countrysideinn.com",
-        "hotelOwnerContacts": ["+1-567-890-1234"],
+        "hotelOwnerContacts": ["45454545454"],
         "hotelRoomTypes": ["Standard"],
         "hotelRoomsDetail": [
             {
@@ -170,7 +166,6 @@ export const hotels = [
         ]
     },
     {
-        "_id": "64b1a7c6ab12ef001c1e2a06",
         "hotelName": "Lakefront Villas",
         "hotelStar": 5,
         "hotelRating": 4.8,
@@ -184,7 +179,7 @@ export const hotels = [
         "hotelGoogleMapUrl": "https://maps.google.com/lakefrontvillas",
         "hotelOwnerName": "Emily Clark",
         "hotelOwnerEmail": "emilyclark@lakefrontvillas.com",
-        "hotelOwnerContacts": ["+1-678-901-2345"],
+        "hotelOwnerContacts": ["82728472472842"],
         "hotelRoomTypes": ["Villa"],
         "hotelRoomsDetail": [
             {
@@ -197,7 +192,6 @@ export const hotels = [
         ]
     },
     {
-        "_id": "64b1a7c6ab12ef001c1e2a07",
         "hotelName": "Forest Retreat",
         "hotelStar": 4,
         "hotelRating": 4.6,
@@ -211,7 +205,7 @@ export const hotels = [
         "hotelGoogleMapUrl": "https://maps.google.com/forestretreat",
         "hotelOwnerName": "David Martin",
         "hotelOwnerEmail": "davidmartin@forestretreat.com",
-        "hotelOwnerContacts": ["+1-789-012-3456"],
+        "hotelOwnerContacts": ["854857498"],
         "hotelRoomTypes": ["Cabin", "Suite"],
         "hotelRoomsDetail": [
             {
@@ -231,7 +225,6 @@ export const hotels = [
         ]
     },
     {
-        "_id": "64b1a7c6ab12ef001c1e2a08",
         "hotelName": "Sunset Boulevard Hotel",
         "hotelStar": 3,
         "hotelRating": 3.9,
@@ -265,7 +258,6 @@ export const hotels = [
         ]
     },
     {
-        "_id": "64b1a7c6ab12ef001c1e2a09",
         "hotelName": "Tropical Paradise Resort",
         "hotelStar": 5,
         "hotelRating": 4.9,
@@ -299,7 +291,6 @@ export const hotels = [
         ]
     },
     {
-        "_id": "64b1a7c6ab12ef001c1e2a0a",
         "hotelName": "Historic Castle Hotel",
         "hotelStar": 3,
         "hotelRating": 4.1,

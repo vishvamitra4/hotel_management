@@ -28,18 +28,18 @@ const Navbar = () => {
                         !user &&
                         (
                             <>
-                                <li>
+                                <li className='bg-[#ff385c]'>
                                     <Link
                                         to="/register"
-                                        className="text-[60px] font-fantasy text-white px-4 py-2 hover:text-[#ff385c] transition duration-300 ease-in-out"
+                                        className="text-[60px] font-fantasy text-white px-4 py-2 hover:text-[#000000] transition duration-300 ease-in-out"
                                     >
                                         Register
                                     </Link>
                                 </li>
-                                <li>
+                                <li className='bg-[#ff385c]'>
                                     <Link
                                         to="/login"
-                                        className="text-[60px] font-fantasy text-white px-4 py-2 hover:text-[#ff385c] transition duration-300 ease-in-out"
+                                        className="text-[60px] font-fantasy text-white px-4 py-2 hover:text-[#000000] transition duration-300 ease-in-out"
                                     >
                                         Login
                                     </Link>
