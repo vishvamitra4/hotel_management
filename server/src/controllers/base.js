@@ -48,17 +48,30 @@ class Base {
         });
     };
 
+    // chekcing user is active or not...
+    async validateUser() {
+        const userToken = this.ctx.cookies.get('userToken');
+        if(userToken){
+            const data = jwt.verify(userToken , this.config.jwt.secretKey);
+            const user = await this.models.User.findOne({userEmail : data.userEmail});
+            if(!user){
+                this.throwError("404" , "User Not Found!");
+            }else if(user.userStatus === "disable"){
+                this.throwError("300" , "Your Account is blocked");
+            }
+        }else{
+            this.throwError("102" , "Please Login first");
+        };
+    };
 
 
     // validating admin...
     async validateAdmin() {
         const token = this.ctx.cookies.get('userToken');
-        console.log(token);
-        console.log("Validating the Admin...");
         if (token) {
             const data = jwt.verify(token, this.config.jwt.secretKey);
             if (data.userEmail !== this.config.admin.email) {
-                this.throwError("102", "Only Admin Can Add any hotel..");
+                this.throwError("403", "This can only be done by Admin");
             };
         } else {
             this.throwError("102", "Please Login first");

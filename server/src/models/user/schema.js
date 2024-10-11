@@ -22,6 +22,12 @@ const schema = new Schema({
         type: String,
         required: true,  
         unique: true
+    },
+    userStatus : {
+        type : String,
+        required : true,
+        enum : ["disable" , "active"],
+        default : "active"
     }
 }, {
     collection: "users",

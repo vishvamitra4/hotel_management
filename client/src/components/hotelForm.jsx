@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import { Navigate, useParams } from 'react-router-dom';
 
 const HotelForm = () => {
+    const { _id } = useParams();
+    const [flag , setFlag] = useState(false);
     const [formData, setFormData] = useState({
         hotelName: '',
         hotelStar: 1,
@@ -28,6 +31,20 @@ const HotelForm = () => {
             }
         ]
     });
+
+    React.useEffect(() => {
+        const fetchHotel = async () => {
+            try {
+                if (_id !== undefined) {
+                    const { data } = await axios.get(`/fetch/hotels/${_id}`);
+                    setFormData(data.data);
+                }
+            } catch (e) {
+                alert(e.response.data.error);
+            };
+        };
+        fetchHotel();
+    }, []);
 
     const [errors, setErrors] = useState({});
 
@@ -112,6 +129,46 @@ const HotelForm = () => {
         });
     };
 
+    // this is for updating the hotel...
+    const handleUpdate = async (e) => {
+
+        e.preventDefault();
+        const newErrors = {};
+        // Validate all fields before submitting
+        Object.keys(formData).forEach((key) => {
+            const error = validateField(key, formData[key]);
+            if (error) {
+                newErrors[key] = error;
+            }
+        });
+
+        setErrors(newErrors);
+
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                delete formData['_id'];
+                delete formData['modified'];
+                delete formData['created'];
+                formData.hotelRoomsDetail.forEach((item)=>{
+                    delete item['_id'];
+                });
+                const { data } = await axios.put(`/update/hotel/${_id}`, formData);
+                setFlag(true);
+                alert(data.message);
+            } catch (e) {
+                alert(e.response.data.error.message);
+            }
+        } else {
+            console.log(newErrors);
+            alert('Please put the input in correct format...');
+        };
+    };
+
+    if(flag){
+        return <Navigate to={`/hotel/${_id}`}/>
+    }
+    // this is submitting the hotel detail...
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -142,7 +199,7 @@ const HotelForm = () => {
 
     return (
         <form className="w-full max-w-lg mx-auto p-6 bg-white shadow-md rounded" onSubmit={handleSubmit}>
-            <h1 className="text-xl font-bold mb-4">Hotel Registration Form</h1>
+            <h1 className="text-xl font-bold mb-4">{`${_id ? "Update Hotel" : "Hotel Registration Form"}`}</h1>
 
             <div className="mb-4">
                 <label className="block text-gray-700">Hotel Name</label>
@@ -391,8 +448,10 @@ const HotelForm = () => {
             </button>
 
             <div className="flex justify-end">
-                <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded-md">
-                    Submit
+                <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded-md"
+                    onClick={_id ? handleUpdate : handleSubmit}
+                >
+                    {`${_id ? "Update" : "Submit"}`}
                 </button>
             </div>
         </form>

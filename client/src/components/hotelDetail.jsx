@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../contexts/user/userContext";
 
 const HotelDetail = () => {
     const { _id } = useParams();
     const [hotel, setHotel] = useState(null);
+    const { isAdmin } = useContext(UserContext);
     const [bookingDetails, setBookingDetails] = useState({
         selectedRoomType: "",
         numRooms: 0,
@@ -41,10 +43,10 @@ const HotelDetail = () => {
             if (room) {
                 setBookingDetails((prevDetails) => ({
                     ...prevDetails,
-                    numRooms: 1, // Default number of rooms
+                    numRooms: 0, // Default number of rooms...
                     checkIn: "",
                     checkOut: "",
-                    totalCost: room.pricePerDay,
+                    totalCost: 0, // default cost..
                 }));
             }
         }
@@ -80,7 +82,7 @@ const HotelDetail = () => {
     return (
         <div className="container mx-auto p-4">
             <div className="flex flex-col lg:flex-row gap-6">
-            <div className="flex-1">
+                <div className="flex-1">
                     {/* Hotel Information */}
                     <div className="bg-[#0B192C] shadow-lg rounded-lg p-6 flex flex-col justify-between text-white mb-6">
                         <div>
@@ -258,6 +260,19 @@ const HotelDetail = () => {
                             </button>
                         </div>
                     </div>
+
+                    {/*This is for update button we have..*/}
+                    {
+                        (isAdmin == true) &&
+                        <Link to={`/hotel/${_id}/update`}>
+                        <button
+                            className={`w-full bg-[#123c07] mt-5 text-white py-3 rounded-lg shadow-md font-semibold transition-colors`}
+                        >
+                            Update Hotel Detail
+                        </button>
+                        </Link>
+                    }
+
                 </div>
             </div>
         </div>

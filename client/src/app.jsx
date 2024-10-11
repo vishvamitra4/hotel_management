@@ -9,20 +9,17 @@ axios.defaults.withCredentials = true;
 
 
 function App() {
-
   const { fetchUserData} = useContext(UserContext);
-
 
   React.useEffect(() => {
     try {
       const userToken = localStorage.getItem("userToken");
-      if (userToken) {
+      if (userToken || userToken.length > 0) {
         fetchUserData(userToken);
       }
     } catch (e) {
-      localStorage.setItem("userToken", "");
+      localStorage.clear();
     }
-
   }, []);
 
 

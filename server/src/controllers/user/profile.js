@@ -10,9 +10,10 @@ class Profile extends Base {
     async profile() {
 
         const { userToken } = this.ctx.request.body;
-        if (userToken.length) {
+    
+        if (userToken) {
             const data = jwt.verify(userToken, this.config.jwt.secretKey);
-            if (data.userEmail) {
+            if (data && data.userEmail) {
                 const user = await this.models.User.findOne({ userEmail: data.userEmail });
                 this.ctx.body = {
                     success: true,

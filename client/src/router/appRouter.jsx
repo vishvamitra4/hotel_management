@@ -7,7 +7,9 @@ import AdminProfile from "../views/admin/adminProfile";
 import UserProfile from "../views/user/userProfile";
 import HotelDetail from "../components/hotelDetail";
 import ProtectedRoute from "./protectedRoutes/protectedRoute";
-
+import HotelForm from "../components/hotelForm";
+import UpdateUserForm from "../components/updateUserForm";
+import AllUsers from "../components/allUsers";
 
 
 function AppRouter() {
@@ -17,6 +19,7 @@ function AppRouter() {
 
     return (
         <Routes>
+
             <Route path="/" element={<Home />} />
             {
                 (!userToken || userToken.length === 0)
@@ -27,10 +30,19 @@ function AppRouter() {
                 </>
             }
 
+            {
+                (userToken &&
+                    <>
+                        <Route path="/update/profile" element={<UpdateUserForm />} />
+                    </>
+                )
+            }
+
             {/* Protected Routed for checking whether user or admin is there or not..*/}
             <Route element={<ProtectedRoute isAdmin={"true"} />}>
                 <Route path="/profile/admin" element={<AdminProfile />} />
                 <Route path="/profile/admin/:subpage?" element={<AdminProfile />} />
+                <Route path="/hotel/:_id/update" element={<HotelForm />} />
             </Route>
 
             <Route element={<ProtectedRoute isAdmin={"false"} />}>
@@ -38,7 +50,7 @@ function AppRouter() {
                 <Route path="/profile/user/:subpage?" element={<UserProfile />} />
             </Route>
 
-            <Route path="/hotel/:_id" element = {<HotelDetail />}/>
+            <Route path="/hotel/:_id" element={<HotelDetail />} />
 
             <Route path="*" element={<Navigate to={"/"} />} />
 

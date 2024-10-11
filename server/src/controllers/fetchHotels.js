@@ -21,10 +21,18 @@ class FetchHotels extends Base {
 
     async fetchHotelsById() {
         const _id = this.ctx.params._id;
-        console.log(_id);
+
+        // Validate the _id
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            this.ctx.body = {
+                success: false,
+                message: "Invalid Hotel ID format"
+            };
+            return;
+        }
+
         try {
             // Use lean() to return a plain JavaScript object instead of a Mongoose document
-            // mogoose document contain the different methods as weel like .save // .remove..
             const hotel = await this.models.Hotel.findById(_id).lean();
 
             if (hotel) {

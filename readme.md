@@ -11,10 +11,9 @@ Today Tasks :
 
 Date : 08/10/2024
 
-1. Every Hotel have its own page.
-2. Admin have access for updating the hotel.
-3. User Detail View/ Admin Detail view
-4. Update User detail and Admin its detail.
+1. Every Hotel have its own page. [✅]
+2. Admin have access for updating the hotel. [✅]
+3. User Detail View/ Admin Detail view [✅]
+4. Update User detail and Admin its detail. [✅]
 5. All User Will show to admin.
-6. All Booking portals to admin
-7. Admin can block a particular user...
+6. Admin cal also disable a particular user

@@ -17,7 +17,7 @@ class Login extends Base {
 
         // cheking whether input email is present or not...
         const user = await this.models.User.findOne({ userEmail: value.userEmail });
-        if (user) {
+        if (user && user.userStatus === "active") {
             // checking the password..
             const isOkay = await user.verifyUserPassword(value.userPassword);
             if (isOkay) {
@@ -36,7 +36,7 @@ class Login extends Base {
                 };
             }else this.throwError("201" , "Password is wrong!");
         } else {
-            this.throwError("201", "User not found");
+            this.throwError("201", "User not found || User is Blocked");
         }
     };
 };

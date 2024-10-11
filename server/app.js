@@ -38,7 +38,7 @@ require('koa-qs')(app, 'extended');
 // cors moddleware...
 app.use(async (ctx, next) => {
     try {
-        const allowedOrigins = ['http://localhost:5174']; // Add your allowed origins here
+        const allowedOrigins = ['http://localhost:5173']; // Add your allowed origins here
         const origin = ctx.request.header.origin;
 
         if (allowedOrigins.includes(origin)) {
