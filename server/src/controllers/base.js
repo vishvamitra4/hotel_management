@@ -18,7 +18,8 @@ class Base {
         this.user = null;
         this.admin = null;
 
-        this._beforeMethod = {};
+        this._beforeMethod = {
+        };
         this._afterMethod = {};
 
         this.error = null;

@@ -58,6 +58,7 @@ class UpdateHotel extends Base {
             };
 
         } catch (err) {
+            console.log(err);
             this.throwError("301", "Error while updating hotel data.");
         }
     }

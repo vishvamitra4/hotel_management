@@ -1,4 +1,5 @@
 module.exports = {
     User : require('./user'),
-    Hotel : require('./hotel')
+    Hotel : require('./hotel'),
+    Booking : require('./booking')
 };

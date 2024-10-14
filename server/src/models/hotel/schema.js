@@ -1,20 +1,20 @@
 const { Schema } = require('mongoose');
 
 const schema = new Schema({
-    _id : Schema.Types.ObjectId,
+    _id: Schema.Types.ObjectId,
     hotelName: {
         type: String,
-        minLength : 1,
-        maxLength : 60,
+        minLength: 1,
+        maxLength: 60,
         required: true,
-        unique : true
+        unique: true
     },
     hotelStar: {
         type: Number,
         required: true,
         min: 1,
         max: 8,
-        default : 1
+        default: 1
     },
     hotelRating: {
         type: Number,
@@ -35,7 +35,7 @@ const schema = new Schema({
         default: []
     },
     hotelStreet: {
-        type: String, 
+        type: String,
         required: true
     },
     hotelCity: {
@@ -61,7 +61,6 @@ const schema = new Schema({
     hotelOwnerEmail: {
         type: String,
         required: true,
-        unique: true
     },
     hotelOwnerContacts: {
         type: [String],
@@ -76,9 +75,9 @@ const schema = new Schema({
             type: String,
             required: true
         },
-        roomDetail : {
-            type : String,
-            required : true,
+        roomDetail: {
+            type: String,
+            required: true,
         },
         totalRooms: {
             type: Number,
@@ -88,10 +87,17 @@ const schema = new Schema({
             type: Number,
             required: true
         },
-        bookedDates: {
-            type: [Date],
-            default: []
-        }
+        bookedDates: [{
+            dateOfBooking: {
+                type: Date,
+                required: true,
+            },
+            totalBookings: {
+                type: Number,
+                required: true,
+                default: 0
+            }
+        }]
     }]
 }, {
     collection: 'hotels',

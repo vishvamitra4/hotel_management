@@ -15,5 +15,7 @@ Date : 08/10/2024
 2. Admin have access for updating the hotel. [✅]
 3. User Detail View/ Admin Detail view [✅]
 4. Update User detail and Admin its detail. [✅]
-5. All User Will show to admin.
-6. Admin cal also disable a particular user
+5. All User Will show to admin. [✅]
+6. Admin cal also disable a particular user [✅]
+
+

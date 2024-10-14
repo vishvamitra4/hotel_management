@@ -3,5 +3,6 @@ module.exports = {
     User : require('./user'),
     Admin : require('./admin'),
     Constants : require('./constants'),
-    FetchHotels : require("./fetchHotels")
+    FetchHotels : require("./fetchHotels"),
+    Booking : require("./booking")
 };

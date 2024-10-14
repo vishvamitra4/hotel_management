@@ -1,9 +1,11 @@
 import { UserProvider } from "./user/userContext";
-
-const AppProvider = ({children})=>{
-    return(
+import BookingDataProvider from "./booking/bookingDataContext";
+const AppProvider = ({ children }) => {
+    return (
         <UserProvider>
-            {children}
+            <BookingDataProvider>
+                {children}
+            </BookingDataProvider>
         </UserProvider>
     )
 };

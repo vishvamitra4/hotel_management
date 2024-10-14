@@ -28,5 +28,10 @@ r.put(`/update/profile/:_id`, async (ctx, next) => {
     await authController.execute("updateProfile");
 })
 
+r.get("/profile/:_id" , async(ctx , next)=>{
+    const authController = new controllers.User.Profile(ctx, next);
+    await authController.execute("profileById");
+})
+
 
 module.exports = r;

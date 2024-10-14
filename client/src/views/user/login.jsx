@@ -44,10 +44,12 @@ const Login = () => {
             // setting the token to local storage..
             localStorage.setItem("userToken" , data.userToken);
             localStorage.setItem("isAdmin" , data.data.flag);
+            localStorage.setItem("user" , JSON.stringify(data.data.user));
             alert(data.message);
             setErrorMessage("");
             setFlag1(true);
         }catch(e){
+            console.log(e);
             setUser(null);
             localStorage.clear();
             setIsAdmin(null);

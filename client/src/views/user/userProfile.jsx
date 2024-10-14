@@ -4,6 +4,7 @@ import Navbar from "../../components/verticalNavbar";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../contexts/user/userContext";
 import { BallTriangle } from 'react-loader-spinner';
+import AllBooking from "../../components/allBooking";
 
 function UserProfile() {
     let { subpage } = useParams();
@@ -27,9 +28,11 @@ function UserProfile() {
 
     return (
         <div className="flex">
-
             <Navbar />
-            {subpage == "userprofile" && <UserDetails user={user} />}
+            <div className="mx-[auto]">
+                {subpage == "userprofile" && <UserDetails user={user} />}
+                {subpage == "allbooking" && <AllBooking user={user} />}
+            </div>
         </div>
     )
 };

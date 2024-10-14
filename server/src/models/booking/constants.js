@@ -1,3 +1,3 @@
 module.exports = {
-    bookingStatus : ["canceled , confirmed"]
+    bookingStatus : ["canceled" , "confirmed"]
 };

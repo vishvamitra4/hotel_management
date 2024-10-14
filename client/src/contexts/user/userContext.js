@@ -15,9 +15,11 @@ export const UserProvider = ({ children }) => {
             const {data} =  await axios.post("/profile", {
                 userToken
             });
+            localStorage.setItem("user" , JSON.stringify(data.data.user));
             setUser(data.data.user);
             setIsAdmin(data.data.flag);
         }catch(e){
+            localStorage.clear();
             alert(e.response.data.error.message);
         };
     };

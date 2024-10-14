@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { UserContext } from "../../contexts/user/userContext";
 import { BallTriangle } from 'react-loader-spinner';
 import AllUsers from "../../components/allUsers";
+import AllBooking from "../../components/allBooking";
 
 function AdminProfile() {
     let { subpage } = useParams();
@@ -32,7 +33,8 @@ function AdminProfile() {
             <div className="mx-[auto]">
                 {subpage == "addhotel" && <HotelForm />}
                 {subpage == "userprofile" && <UserDetails user={user} />}
-                {subpage === "allusers" && <AllUsers />}
+                {subpage == "allusers" && <AllUsers />}
+                {subpage == "allbooking" && <AllBooking />}
             </div>
         </div>
     )

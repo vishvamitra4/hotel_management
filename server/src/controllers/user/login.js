@@ -22,7 +22,7 @@ class Login extends Base {
             const isOkay = await user.verifyUserPassword(value.userPassword);
             if (isOkay) {
                 // generating the token here..
-                const token = jwt.sign({userEmail : value.userEmail} , this.config["jwt"]["secretKey"] , {});
+                const token = jwt.sign({_id : user._id , userEmail : value.userEmail} , this.config["jwt"]["secretKey"] , {});
                 // setting the cookies here..
                 this.ctx.cookies.set("userToken" , token);
                 this.ctx.body = {

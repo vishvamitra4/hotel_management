@@ -10,6 +10,7 @@ import ProtectedRoute from "./protectedRoutes/protectedRoute";
 import HotelForm from "../components/hotelForm";
 import UpdateUserForm from "../components/updateUserForm";
 import AllUsers from "../components/allUsers";
+import CheckOut from "../views/user/checkOut";
 
 
 function AppRouter() {
@@ -34,6 +35,7 @@ function AppRouter() {
                 (userToken &&
                     <>
                         <Route path="/update/profile" element={<UpdateUserForm />} />
+                        <Route path="/hotel/:_hotelId/:_userId/checkout" element={<CheckOut />} />
                     </>
                 )
             }

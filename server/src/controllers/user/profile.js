@@ -4,6 +4,9 @@ const jwt = require('jsonwebtoken');
 class Profile extends Base {
     constructor(ctx, next) {
         super(ctx, next);
+        this._beforeMethod = {
+            "profile" : ["validateUser"]
+        }
     };
 
 
@@ -14,7 +17,7 @@ class Profile extends Base {
         if (userToken) {
             const data = jwt.verify(userToken, this.config.jwt.secretKey);
             if (data && data.userEmail) {
-                const user = await this.models.User.findOne({ userEmail: data.userEmail });
+                const user = await this.models.User.findById(data._id);
                 this.ctx.body = {
                     success: true,
                     message: "user get fetched from given cookies",
@@ -29,9 +32,31 @@ class Profile extends Base {
             }
         } else {
             this.throwError("101", "No cookies found!");
-        }
-
+        };
     };
+
+    // finding userDetail by its id..
+    async profileById() {
+        const _id = this.ctx.params._id;
+        if(!_id){
+            this.throwError("101" , "No id is present here..");
+        };
+
+        try{
+            const user = await this.models.User.findOne({_id : _id});
+            if(user){
+                this.ctx.body = {
+                    success : true,
+                    message : "User got fetched!",
+                    data : user
+                };
+            };
+        }catch(e){
+            this.throwError("404" , "User Not Found");
+        }
+    }
+
+
 };
 
 module.exports = Profile;

@@ -23,7 +23,7 @@ const hotelSchema = Joi.object({
             roomDetail: Joi.string().required(),
             totalRooms: Joi.number().min(1).required(),
             pricePerDay: Joi.number().min(0).required(),
-            bookedDates: Joi.array().items(Joi.date()).default([])
+            bookedDates: Joi.array()
         })
     ).required()
 });
