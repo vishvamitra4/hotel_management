@@ -4,7 +4,7 @@ import { Navigate, useParams } from 'react-router-dom';
 
 const HotelForm = () => {
     const { _id } = useParams();
-    const [flag , setFlag] = useState(false);
+    const [flag, setFlag] = useState(false);
     const [formData, setFormData] = useState({
         hotelName: '',
         hotelStar: 1,
@@ -44,7 +44,7 @@ const HotelForm = () => {
             };
         };
         fetchHotel();
-    }, []);
+    }, [_id]);
 
     const [errors, setErrors] = useState({});
 
@@ -72,7 +72,7 @@ const HotelForm = () => {
                 }
                 break;
             case 'hotelZipcode':
-                if (!value.match()) {
+                if (!/^\d{5}$/.test(value)) {
                     error = 'Zipcode should be a valid 5-digit number.';
                 }
                 break;
@@ -129,12 +129,9 @@ const HotelForm = () => {
         });
     };
 
-    // this is for updating the hotel...
     const handleUpdate = async (e) => {
-
         e.preventDefault();
         const newErrors = {};
-        // Validate all fields before submitting
         Object.keys(formData).forEach((key) => {
             const error = validateField(key, formData[key]);
             if (error) {
@@ -149,7 +146,7 @@ const HotelForm = () => {
                 delete formData['_id'];
                 delete formData['modified'];
                 delete formData['created'];
-                formData.hotelRoomsDetail.forEach((item)=>{
+                formData.hotelRoomsDetail.forEach((item) => {
                     delete item['_id'];
                 });
                 const { data } = await axios.put(`/update/hotel/${_id}`, formData);
@@ -159,21 +156,17 @@ const HotelForm = () => {
                 alert(e.response.data.error.message);
             }
         } else {
-            console.log(newErrors);
             alert('Please put the input in correct format...');
         };
     };
 
-    if(flag){
-        return <Navigate to={`/hotel/${_id}`}/>
+    if (flag) {
+        return <Navigate to={`/hotel/${_id}`} />;
     }
-    // this is submitting the hotel detail...
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
         const newErrors = {};
-        // Validate all fields before submitting
         Object.keys(formData).forEach((key) => {
             const error = validateField(key, formData[key]);
             if (error) {
@@ -185,43 +178,43 @@ const HotelForm = () => {
 
         if (Object.keys(newErrors).length === 0) {
             try {
-                console.log(formData);
                 const { data } = await axios.post("/new/hotel", formData);
                 alert(data.message);
             } catch (e) {
                 alert(e.response.data.error.message);
             }
         } else {
-            console.log(newErrors);
             alert('Please put the input in correct format...');
         };
     };
 
     return (
-        <form className="w-full max-w-lg mx-auto p-6 bg-white shadow-md rounded" onSubmit={handleSubmit}>
-            <h1 className="text-xl font-bold mb-4">{`${_id ? "Update Hotel" : "Hotel Registration Form"}`}</h1>
+        <form className="w-full w-[600px] mx-auto p-6 bg-white shadow-lg rounded-lg" onSubmit={handleSubmit}>
+            <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">{`${_id ? "Update Hotel" : "Hotel Registration Form"}`}</h1>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Hotel Name</label>
+            {/** Hotel Name */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Hotel Name</label>
                 <input
                     type="text"
                     name="hotelName"
                     value={formData.hotelName}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     required
                 />
                 {errors.hotelName && <p className="text-red-500 text-sm">{errors.hotelName}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Hotel Star Rating</label>
+            {/** Hotel Star Rating */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Hotel Star Rating</label>
                 <input
                     type="number"
                     name="hotelStar"
                     value={formData.hotelStar}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     min="1"
                     max="8"
                     required
@@ -229,231 +222,198 @@ const HotelForm = () => {
                 {errors.hotelStar && <p className="text-red-500 text-sm">{errors.hotelStar}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Hotel Rating</label>
+            {/** Hotel Rating */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Hotel Rating</label>
                 <input
                     type="number"
                     name="hotelRating"
                     value={formData.hotelRating}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     min="0"
                     max="5"
                 />
                 {errors.hotelRating && <p className="text-red-500 text-sm">{errors.hotelRating}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Hotel Description</label>
+            {/** Hotel Description */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Hotel Description</label>
                 <textarea
                     name="hotelDescription"
                     value={formData.hotelDescription}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     required
                 />
                 {errors.hotelDescription && <p className="text-red-500 text-sm">{errors.hotelDescription}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Tags (comma-separated)</label>
+            {/** Tags */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Tags (comma-separated)</label>
                 <input
                     type="text"
                     value={formData.hotelTags.join(',')}
                     onChange={(e) => handleArrayChange(e, 'hotelTags')}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                 />
                 {errors.hotelTags && <p className="text-red-500 text-sm">{errors.hotelTags}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Hotel Images (comma-separated URLs)</label>
-                <input
-                    type="text"
-                    value={formData.hotelImages.join(',')}
-                    onChange={(e) => handleArrayChange(e, 'hotelImages')}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
-                {errors.hotelImages && <p className="text-red-500 text-sm">{errors.hotelImages}</p>}
-            </div>
-
-            {/* Additional fields here */}
-            <div className="mb-4">
-                <label className="block text-gray-700">Street</label>
+            {/** Street */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Street</label>
                 <input
                     type="text"
                     name="hotelStreet"
                     value={formData.hotelStreet}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     required
                 />
-                {errors.hotelStreet && <p className="text-red-500 text-sm">{errors.hotelStreet}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">City</label>
+            {/** City */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">City</label>
                 <input
                     type="text"
                     name="hotelCity"
                     value={formData.hotelCity}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     required
                 />
-                {errors.hotelCity && <p className="text-red-500 text-sm">{errors.hotelCity}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">State</label>
+            {/** State */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">State</label>
                 <input
                     type="text"
                     name="hotelState"
                     value={formData.hotelState}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     required
                 />
-                {errors.hotelState && <p className="text-red-500 text-sm">{errors.hotelState}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Zipcode</label>
+            {/** Zip Code */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Zip Code</label>
                 <input
                     type="text"
                     name="hotelZipcode"
                     value={formData.hotelZipcode}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     required
                 />
                 {errors.hotelZipcode && <p className="text-red-500 text-sm">{errors.hotelZipcode}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Google Map URL</label>
+            {/** Google Map URL */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Google Map URL</label>
                 <input
                     type="url"
                     name="hotelGoogleMapUrl"
                     value={formData.hotelGoogleMapUrl}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
-                    required
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                 />
-                {errors.hotelGoogleMapUrl && <p className="text-red-500 text-sm">{errors.hotelGoogleMapUrl}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Owner Name</label>
+            {/** Owner Name */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Owner Name</label>
                 <input
                     type="text"
                     name="hotelOwnerName"
                     value={formData.hotelOwnerName}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     required
                 />
-                {errors.hotelOwnerName && <p className="text-red-500 text-sm">{errors.hotelOwnerName}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Owner Email</label>
+            {/** Owner Email */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Owner Email</label>
                 <input
                     type="email"
                     name="hotelOwnerEmail"
                     value={formData.hotelOwnerEmail}
                     onChange={handleInputChange}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                     required
                 />
                 {errors.hotelOwnerEmail && <p className="text-red-500 text-sm">{errors.hotelOwnerEmail}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">Owner Contacts (comma-separated)</label>
+            {/** Owner Contacts */}
+            <div className="mb-6">
+                <label className="block text-gray-700 font-semibold">Owner Contacts (comma-separated)</label>
                 <input
                     type="text"
                     value={formData.hotelOwnerContacts.join(',')}
                     onChange={(e) => handleArrayChange(e, 'hotelOwnerContacts')}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                 />
                 {errors.hotelOwnerContacts && <p className="text-red-500 text-sm">{errors.hotelOwnerContacts}</p>}
             </div>
 
-            <div className="mb-4">
-                <label className="block text-gray-700">HotelRoomTypes</label>
-                <input
-                    type="text"
-                    value={formData.hotelRoomTypes.join(',')}
-                    onChange={(e) => handleArrayChange(e, 'hotelRoomTypes')}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
-                {errors.hotelRoomTypes && <p className="text-red-500 text-sm">{errors.hotelRoomTypes}</p>}
-            </div>
-
-            {/* Hotel Rooms */}
-            {formData.hotelRoomsDetail.map((room, index) => (
-                <div key={index} className="mb-4 border-t border-gray-200 pt-4">
-                    <h2 className="text-lg font-semibold mb-2">Room {index + 1}</h2>
-                    <div className="mb-4">
-                        <label className="block text-gray-700">Room Type</label>
+            {/** Room Types */}
+            <div className="mb-6">
+                <h2 className="text-lg font-semibold mb-2">Room Types</h2>
+                {formData.hotelRoomsDetail.map((room, index) => (
+                    <div key={index} className="border p-4 rounded-lg mb-4">
+                        <h3 className="font-semibold">Room Type {index + 1}</h3>
+                        <label className="block text-gray-700">Type</label>
                         <input
                             type="text"
                             value={room.roomType}
                             onChange={(e) => handleRoomsChange(index, 'roomType', e.target.value)}
-                            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                            className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                         />
-                        {errors[`room-${index}-roomType`] && <p className="text-red-500 text-sm">{errors[`room-${index}-roomType`]}</p>}
-                    </div>
-
-                    <div className="mb-4">
-                        <label className="block text-gray-700">Room Detail</label>
-                        <input
-                            type="text"
+                        <label className="block text-gray-700 mt-4">Details</label>
+                        <textarea
                             value={room.roomDetail}
                             onChange={(e) => handleRoomsChange(index, 'roomDetail', e.target.value)}
-                            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                            className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                         />
-                        {errors[`room-${index}-roomDetail`] && <p className="text-red-500 text-sm">{errors[`room-${index}-roomDetail`]}</p>}
-                    </div>
-
-                    <div className="mb-4">
-                        <label className="block text-gray-700">Total Rooms</label>
+                        <label className="block text-gray-700 mt-4">Total Rooms</label>
                         <input
                             type="number"
                             value={room.totalRooms}
                             onChange={(e) => handleRoomsChange(index, 'totalRooms', e.target.value)}
-                            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
+                            className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                             min="1"
                         />
-                        {errors[`room-${index}-totalRooms`] && <p className="text-red-500 text-sm">{errors[`room-${index}-totalRooms`]}</p>}
-                    </div>
-
-                    <div className="mb-4">
-                        <label className="block text-gray-700">Price Per Day</label>
+                        <label className="block text-gray-700 mt-4">Price Per Day</label>
                         <input
                             type="number"
                             value={room.pricePerDay}
                             onChange={(e) => handleRoomsChange(index, 'pricePerDay', e.target.value)}
-                            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
-                            min="1"
+                            className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-[#FF6500]"
                         />
-                        {errors[`room-${index}-pricePerDay`] && <p className="text-red-500 text-sm">{errors[`room-${index}-pricePerDay`]}</p>}
                     </div>
-                </div>
-            ))}
-
-            <button type="button" onClick={addNewRoom} className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-md">
-                Add New Room
-            </button>
-
-            <div className="flex justify-end">
-                <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded-md"
-                    onClick={_id ? handleUpdate : handleSubmit}
+                ))}
+                <button
+                    type="button"
+                    onClick={addNewRoom}
+                    className="bg-[#FF6500] text-white px-4 py-2 rounded-md mt-2"
                 >
-                    {`${_id ? "Update" : "Submit"}`}
+                    Add New Room Type
                 </button>
             </div>
+
+            <button type="submit" onClick={handleUpdate} className="w-full bg-[#FF6500] text-white px-4 py-2 rounded-md">
+                {`${_id ? "Update Hotel" : "Add Hotel"}`}
+            </button>
         </form>
     );
 };

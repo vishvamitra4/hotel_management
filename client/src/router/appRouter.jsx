@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "../views/home";
 import Login from "../views/user/login";
 import Register from "../views/user/register";
@@ -11,53 +11,55 @@ import HotelForm from "../components/hotelForm";
 import UpdateUserForm from "../components/updateUserForm";
 import AllUsers from "../components/allUsers";
 import CheckOut from "../views/user/checkOut";
-
+import Layout from "../layout";
 
 function AppRouter() {
-
     const userToken = window.localStorage.getItem("userToken");
-
+    const location = useLocation();
+    console.log(location.search);
 
     return (
         <Routes>
-
-            <Route path="/" element={<Home />} />
-            {
-                (!userToken || userToken.length === 0)
-                &&
-                <>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                </>
-            }
-
-            {
-                (userToken &&
+            <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                {
+                    (!userToken || userToken.length === 0) &&
                     <>
-                        <Route path="/update/profile" element={<UpdateUserForm />} />
-                        <Route path="/hotel/:_hotelId/:_userId/checkout" element={<CheckOut />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
                     </>
-                )
-            }
+                }
 
-            {/* Protected Routed for checking whether user or admin is there or not..*/}
-            <Route element={<ProtectedRoute isAdmin={"true"} />}>
-                <Route path="/profile/admin" element={<AdminProfile />} />
-                <Route path="/profile/admin/:subpage?" element={<AdminProfile />} />
-                <Route path="/hotel/:_id/update" element={<HotelForm />} />
+                {
+                    (userToken && 
+                        <>
+                            <Route path="/update/profile" element={<UpdateUserForm />} />
+                            <Route path="/hotel/:_hotelId/:_userId/checkout" element={<CheckOut />} />
+                        </>
+                    )
+                }
+
+                {/* Redirect to login for /admin paths if not authenticated */}
+                <Route path="/admin/*" element={userToken ? <AdminProfile /> : <Navigate to="/login" />} />
+
+                {/* Protected Route for Admin */}
+                <Route element={<ProtectedRoute isAdmin={"true"} />}>
+                    <Route path="/profile/admin" element={<AdminProfile />} />
+                    <Route path="/profile/admin/:subpage?" element={<AdminProfile />} />
+                    <Route path="/hotel/:_id/update" element={<HotelForm />} />
+                </Route>
+
+                <Route element={<ProtectedRoute isAdmin={"false"} />}>
+                    <Route path="/profile/user" element={<UserProfile />} />
+                    <Route path="/profile/user/:subpage?" element={<UserProfile />} />
+                </Route>
+
+                <Route path="/hotel/:_id" element={<HotelDetail />} />
+
+                <Route path="*" element={<Navigate to={"/"} />} />
             </Route>
-
-            <Route element={<ProtectedRoute isAdmin={"false"} />}>
-                <Route path="/profile/user" element={<UserProfile />} />
-                <Route path="/profile/user/:subpage?" element={<UserProfile />} />
-            </Route>
-
-            <Route path="/hotel/:_id" element={<HotelDetail />} />
-
-            <Route path="*" element={<Navigate to={"/"} />} />
-
         </Routes>
-    )
+    );
 };
 
 export default AppRouter;

@@ -14,10 +14,6 @@ const schema = new Schema({
         ref: 'Hotel',
         required: true
     },
-    bookingHotelName : {
-        type : String,
-        required : true
-    },
     bookingDetail: [{ // it will store all types of rooms and their counts..
         selectedRoomType: { // type of room user is booking
             type: String,

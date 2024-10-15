@@ -3,6 +3,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { BookingDataContext } from "../../contexts/booking/bookingDataContext";
 import { FaBed, FaCalendarAlt } from "react-icons/fa";
 import axios from "axios";
+import {toast} from 'react-toastify'
 
 function CheckOut() {
     const { bookingData, grandTotal, setBookingData, setGrandTotal } = React.useContext(BookingDataContext);
@@ -44,10 +45,10 @@ function CheckOut() {
                 grandCost: grandTotal,
                 bookingStatus: 'confirmed'
             });
-            alert(data.message);
+            toast.success(data.message);
             setFlag(true);
         } catch (e) {
-            alert(e.response.data.error.message);
+            toast.error(e.response.data.error.message);
         };
     };
 

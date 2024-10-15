@@ -1,45 +1,84 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { UserContext } from '../contexts/user/userContext';
-
+import axios from 'axios';
+import { toast } from 'react-toastify';
 const Navbar = () => {
-    const { user, isAdmin } = useContext(UserContext);
+    const { setUser , setIsAdmin } = useContext(UserContext);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const isAdmin = localStorage.getItem("isAdmin");
+
+    const [flag , setFlag] = React.useState(false);
+
+    const handleLogout = async (e) => {
+        try {
+            await axios.post("/logout");
+            localStorage.clear();
+            setUser(null);
+            setIsAdmin(null);
+            toast.success("Logout Successful!");
+            setFlag(true);
+        } catch (e) {
+            toast.error(e.response.data.error.message);
+        }
+    };
+
+    if(flag){
+        return <Navigate to={"/"} />
+    }
 
     return (
-        <nav className={`flex justify-center items-center ${isAdmin ? "bg-red-800" : "bg-[#ff385c]"} p-4 h-[500px] bg-cover bg-center`}
-            style={{ backgroundImage: 'url("https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=800")' }}>
-            <div className="w-full max-w-7xl flex justify-between items-center">
-                {/* Hotel Name */}
-                <div className="text-white text-4xl font-extrabold">
-                    <Link to={"/"}><h1 className='text-[200px]'><span className='text-[300px]'>AIR</span><span className='text-[#ff385c]'>BNB</span></h1></Link>
-                </div>
+        <nav className="bg-[#0B192C] text-white pr-[5rem] pl-[5rem] p-[2rem] shadow-lg">
+            <ul className="flex justify-between items-center">
+                {/* Left side: Home */}
+                <li>
+                    <Link
+                        to="/"
+                        className="text-[#FF6500] hover:text-[#FF6500] text-[1.4rem] font-bold transition duration-300"
+                    >
+                        Home
+                    </Link>
+                </li>
 
-                {/* Navigation Links */}
-                <ul className="flex space-x-6">
-                    <li>
-                        <Link
-                            to={`${isAdmin ? "/profile/admin" : "/profile/user"}`}
-                            className="text-[60px] font-fantasy text-white px-4 py-2 hover:text-[#ff385c] transition duration-300 ease-in-out"
-                        >
-                            {user ? user.userName : null}
-                        </Link>
-                    </li>
+                {/* Right side: User and Authentication Links */}
+                <div className="flex space-x-6">
                     {
-                        !user &&
-                        (
+                        user && (
                             <>
-                                <li className='bg-[#ff385c]'>
+                                <li>
+                                    <Link
+                                        to={`${isAdmin=='true' ? "/profile/admin" : "/profile/user"}`}
+                                        className="text-[#fff] hover:text-[#FF6500] text-[1.4rem] font-bold transition duration-300"
+                                    >
+                                        {user ? `${user.userName}'Profile` : null}
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        onClick={handleLogout}
+                                        className="text-[#e74c3c] hover:text-[#FF6500] text-[1.4rem] font-bold transition duration-300"
+                                    >
+                                        Logout
+                                    </Link>
+                                </li>
+                            </>
+                        )
+                    }
+                    {
+                        user==null && (
+                            <>
+                                <li>
                                     <Link
                                         to="/register"
-                                        className="text-[60px] font-fantasy text-white px-4 py-2 hover:text-[#000000] transition duration-300 ease-in-out"
+                                        className="text-[#fff] hover:text-[#FF6500] text-[1.4rem] font-bold transition duration-300"
                                     >
                                         Register
                                     </Link>
                                 </li>
-                                <li className='bg-[#ff385c]'>
+                                <li>
                                     <Link
                                         to="/login"
-                                        className="text-[60px] font-fantasy text-white px-4 py-2 hover:text-[#000000] transition duration-300 ease-in-out"
+                                        className="text-[#fff] hover:text-[#FF6500] text-[1.4rem] font-bold transition duration-300"
                                     >
                                         Login
                                     </Link>
@@ -47,8 +86,8 @@ const Navbar = () => {
                             </>
                         )
                     }
-                </ul>
-            </div>
+                </div>
+            </ul>
         </nav>
     );
 };

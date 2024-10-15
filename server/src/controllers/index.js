@@ -4,5 +4,6 @@ module.exports = {
     Admin : require('./admin'),
     Constants : require('./constants'),
     FetchHotels : require("./fetchHotels"),
-    Booking : require("./booking")
+    Booking : require("./booking"),
+    Comment : require('./comment')
 };

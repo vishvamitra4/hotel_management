@@ -1,8 +1,6 @@
-const Base = require('../base');
-const Validation = require('../../validations');
-const { default: mongoose } = require('mongoose');
+const {CancelBooking} = require("../booking");
 
-class FetchUsers extends Base {
+class FetchUsers extends CancelBooking {
     constructor(ctx, next) {
         super(ctx, next);
         this._beforeMethod = {
@@ -12,8 +10,17 @@ class FetchUsers extends Base {
     };
 
     async fetchUsers() {
+        const { userName, userEmail } = this.ctx.query;
+        let filter = { userEmail: { $ne: this.config.admin.email } };
+
+        if (userName.length > 0) {
+            filter.userName = { $regex: userName, $options: "i" } // it is case insensitive..
+        };
+        if (userEmail.length) {
+            filter.userEmail = { $ne: this.config.admin.email, $regex: userEmail, $options: "i" }
+        }
         try {
-            const users = await this.models.User.find({ userEmail: { $ne: this.config.admin.email } });
+            const users = await this.models.User.find(filter);
             this.ctx.body = {
                 success: true,
                 message: "All Users Fetched!",
@@ -26,6 +33,12 @@ class FetchUsers extends Base {
 
     async toggleUserStatus() {
         const _id = this.ctx.params._id;
+        // fetching all bookings made by that user..
+        const bookings = await this.models.Booking.find({bookingUser : _id , bookingStatus : {$eq : "confirmed"}});
+        for(const B of bookings){ // cancelling all bookings...
+            const {_id} = B;
+            await this.cancelBooking(_id); // cancelBooking method..
+        }
         try {
             const user = await this.models.User.findById(_id);
             if (!user) this.throwError("404", "User not Found");

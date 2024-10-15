@@ -1,8 +1,10 @@
 const Base = require("../base");
-
 class CancelBooking extends Base {
     constructor(ctx, next) {
         super(ctx, next);
+        this._beforeMethod = {
+            "cancelBooking": ["validateUser"]
+        }
     };
 
     // getting all dates between checkin to checkout..
@@ -21,24 +23,57 @@ class CancelBooking extends Base {
     };
 
     // cancel bookings...
-    async cancelBooking() {
-        const bookingId = this.ctx.params._id;
-
+    async cancelBooking(A = null) { // checking is getting paramets or not...
+        let bookingId;
+        if(A.length == 0){
+            bookingId = this.ctx.params._id;
+        }else bookingId = A;
+        // if bookingid is not present..
         if (!bookingId) {
             this.throwError("404", "Booking Not Found!");
         };
+        // fetching the booking...
+        const booking = await this.models.Booking.findOne({ _id: bookingId });
+        // updating the bookinstatus..
+        try {
+            await this.models.Booking.updateOne(
+                { _id: bookingId },
+                { $set: { bookingStatus: 'canceled' } }
+            );
 
-        const booking = await this.models.Booking.findOne({_id : bookingId});
+            const bookingDetail = booking.bookingDetail; // fetching bookingDetail..
+            for (const B of bookingDetail) { // iterating to each room details..
+                const { selectedRoomType, numRooms, checkIn, checkOut } = B;
 
-        // updating the booking status to canceled...
-        await this.models.Booking.updateOne(
-            { _id: bookingId },
-            { $set: { bookingStatus: 'canceled' } }
-        );
+                // dates to update...
+                const dateRange = this.getDateRange(checkIn, checkOut);
 
-        // // updating bookeddate for rach type of room types...
-        // const bookingDetail = booking.bookingDetail;
-        // for
+                for (const date of dateRange) { // iterating to all dates of dateRange...
+                    await this.models.Hotel.updateOne({
+                        _id: booking.bookingHotel, // finding the particular hotel...
+                        'hotelRoomsDetail.roomType': selectedRoomType, // matching a particular roomtype...
+                        'hotelRoomsDetail.bookedDates.dateOfBooking': date // matching the exact date...
+                    }, {
+                        $inc: {
+                            'hotelRoomsDetail.$.bookedDates.$[elem].totalBookings': -numRooms // decrementing the value...
+                        }
+                    }, {
+                        arrayFilters: [{ 'elem.dateOfBooking': date }] // uodating the matching date onyl...
+                    }
+                    );
+                };
+            };
+
+            this.ctx.body = {
+                success : true,
+                message : "Canceled!"
+            };
+
+        }catch(e){
+            console.log(e);
+            this.throwError("201" , "Not Canceled")
+        }
+
     }
 };
 

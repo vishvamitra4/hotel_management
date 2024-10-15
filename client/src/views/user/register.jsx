@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import axios from 'axios';
 import Footer from '../../components/footer';
 import image1 from "../../assets/image1.png";
+import { toast } from 'react-toastify';
 
 const Register = () => {
     const [userName, setUserName] = useState('');
@@ -32,10 +33,10 @@ const Register = () => {
             const { data } = await axios.post("/register/user", {
                 userName, userEmail, userPassword, userPhoneNumber
             });
-            alert(`${data.message}. You can now log in.`);
+            toast.success(`${data.message}. You can now log in.`);
             setFlag(true);
         } catch (e) {
-            alert(e.response.data.error.message);
+            toast.error(e.response.data.error.message);
         }
     };
 

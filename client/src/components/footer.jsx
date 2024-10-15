@@ -4,7 +4,7 @@ import { FaFacebook, FaTwitter, FaLinkedin, FaGithub, FaMapMarkerAlt, FaPhone, F
 const Footer = () => {
     return (
         <footer className="flex footer-distributed bg-[#1f2937] text-white py-14 px-10">
-            {/* Footer Left */}
+            
             <div className="footer-left md:w-2/5 w-full mb-10 md:mb-0">
                 <h3 className="text-3xl font-semibold">
                     Air<span className="text-[#ff385c]">BNB</span>
@@ -25,7 +25,7 @@ const Footer = () => {
                 <p className="text-gray-300">Company Name © 2024</p>
             </div>
 
-            {/* Footer Center */}
+
             <div className="footer-center md:w-1/3 w-full mb-10 md:mb-0">
                 <div className="flex items-center my-4">
                     <FaMapMarkerAlt className="text-4xl bg-gray-700 p-2 rounded-full" />
@@ -45,11 +45,11 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* Footer Right */}
+            
             <div className="footer-right md:w-1/5 w-full">
                 <p className="footer-company-about text-gray-300 mb-5">
                     <span className="text-white font-bold">About the company</span>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
+                    AirBNB , Inspiration for future getaways
                 </p>
                 <div className="footer-icons flex space-x-3">
                     <a href="#" className="bg-gray-700 p-2 rounded"><FaFacebook className="text-xl" /></a>

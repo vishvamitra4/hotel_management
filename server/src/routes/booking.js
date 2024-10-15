@@ -16,6 +16,11 @@ r.post("/check/availability", async (ctx, next) => {
 r.get("/fetch/booking/:_id" , async(ctx , next)=>{
     const bookingController = new controller.Booking.FetchBooking(ctx , next);
     await bookingController.execute("fetchBooking");
+});
+
+r.put("/cancel/booking/:_id" , async(ctx , next)=>{
+    const bookingController = new controller.Booking.CancelBooking(ctx , next);
+    await bookingController.execute("cancelBooking");
 })
 
 module.exports = r;

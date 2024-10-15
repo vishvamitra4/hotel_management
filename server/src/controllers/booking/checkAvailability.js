@@ -8,12 +8,11 @@ class CheckingRoomAvailability extends Base {
     // getting all dates between checkin to checkout..
     getDateRange(checkIn, checkOut) {
         const dateArray = [];
-        let currDate = new Date(checkIn); // Parse checkIn to Date object
-        const checkOutDate = new Date(checkOut); // Parse checkOut to Date object
+        let currDate = new Date(checkIn);
+        const checkOutDate = new Date(checkOut); 
 
-        while (currDate < checkOutDate) { // Not including the checkout date
-            dateArray.push(new Date(currDate)); // Push a copy of the current date
-            // Increment the current date by 1 day
+        while (currDate < checkOutDate) {
+            dateArray.push(new Date(currDate)); 
             currDate.setDate(currDate.getDate() + 1);
         }
 
@@ -50,8 +49,6 @@ class CheckingRoomAvailability extends Base {
         bookedDates.forEach((booking) => {
             dateBookingMap[booking.dateOfBooking] = booking.totalBookings;
         });
-        console.log(dateBookingMap);
-
         // checking is that date available in booking map or not..
         for (const date of datesToCheck) {
             if (dateBookingMap[date] > 0) { // if that date already in bookedDate array..

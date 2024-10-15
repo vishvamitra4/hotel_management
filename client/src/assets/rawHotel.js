@@ -1,7 +1,7 @@
 export const hotels =
     [
         {
-            "hotelName": "Ocean View Resort",
+            "hotelName": "Krishna Hotel",
             "hotelStar": 5,
             "hotelRating": 5,
             "hotelDescription": "A luxury resort by the sea, offering stunning views and premium facilities.",

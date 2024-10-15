@@ -7,7 +7,7 @@ const schema = new Schema({
         ref: 'Hotel',  
         required: true
     },
-    createdBy: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -16,16 +16,6 @@ const schema = new Schema({
         type: String,
         required: true
     },
-    givenRating: {
-        type: Number,
-        required: true,
-        min: 1,
-        max: 5
-    },
-    imageUrl: {
-        type: String,
-        default: ''
-    }
 }, {
     collection: 'comments',
     timestamps: {

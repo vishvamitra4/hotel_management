@@ -29,7 +29,7 @@ const Navbar = () => {
     }
 
     return (
-        <div className="bg-[#0B192C] w-64 h-screen space-y-6 py-7 px-2 fixed inset-y-0 left-0">
+        <div className="bg-[#0B192C] w-64  h-screen space-y-6 py-7 px-2 fixed inset-y-0 left-0">
             {/* Name */}
             <div className="text-[#FF6500] text-lg font-semibold px-4">
                 <Link to={"/"}>AirBNB</Link>

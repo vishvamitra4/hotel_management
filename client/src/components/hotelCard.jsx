@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function HotelCard({ hotel }) {
-    const { _id, hotelName, hotelRating, hotelTags, hotelImages, hotelCity, hotelState, hotelRoomsDetail } = hotel;
+    const { _id, hotelName, hotelRating, hotelTags, hotelImages, hotelCity, hotelState, hotelRoomsDetail , hotelZipcode } = hotel;
     const [currentImage, setCurrentImage] = useState(0);
 
     // Calculate the average room cost
@@ -47,10 +47,10 @@ function HotelCard({ hotel }) {
                 <div className="px-6 py-4">
                     <div className="font-bold text-lg mb-2 text-[#ff6500]">{hotelName}</div>
                     <p className="text-[#1e3e62] text-base">
-                        {hotelCity}, {hotelState}
+                        {hotelCity}, {hotelState} , {hotelZipcode}
                     </p>
                     <p className="text-yellow-500 font-bold">⭐ {hotelRating}</p>
-                    <p className="text-[#0b192c] font-bold mt-2">Average Room Price: ${averageCost}</p>
+                    <p className="text-[#0b192c] font-bold mt-2">Average Room Price: ₹{averageCost}</p>
                 </div>
 
                 <div className="px-6 pt-4 pb-2">

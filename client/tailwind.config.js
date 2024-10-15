@@ -10,7 +10,10 @@ module.exports = {
       },
       backgroundImage : {
         'image1' : "url('../../assets/image1.png')"
-      }
+      },
+      zIndex: {
+        '-1': '-1',
+      },
     },
   },
   plugins: [],

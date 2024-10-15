@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, redirect, Navigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../contexts/user/userContext";
 import { BookingDataContext } from "../contexts/booking/bookingDataContext";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer , toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import HotelInformation from "./hotelInformation";
+import Comment from "./comment";
 
 const HotelDetail = () => {
     const { _id } = useParams();
@@ -20,7 +22,7 @@ const HotelDetail = () => {
                 const { data } = await axios.get(`/fetch/hotels/${_id}`);
                 if (data) {
                     setHotel(data.data);
-                    localStorage.setItem("hotel" , JSON.stringify(data.data));
+                    localStorage.setItem("hotel", JSON.stringify(data.data));
                     const initialBookingDetails = data.data.hotelRoomTypes.map(roomType => ({
                         selectedRoomType: roomType,
                         numRooms: 0,
@@ -78,6 +80,7 @@ const HotelDetail = () => {
             });
             if (data) {
                 handleBookingChange(index, "available", "Available");
+                toast.success("Available");
             }
         } catch (e) {
             handleBookingChange(index, "available", "Not Available");
@@ -89,7 +92,13 @@ const HotelDetail = () => {
         const bookings = bookingDetails.filter((item) => item.numRooms > 0 && item.available === "Available");
         setBookingData(bookings);
         setGrandTotal(grandTotal);
-        navigate(`/hotel/${_id}/${user._id}/checkout`);
+        console.log(user);
+        if(!user){
+            navigate(`/login?redirect=/hotel/${_id}`);
+        }else{
+            navigate(`/hotel/${_id}/${user._id}/checkout`);
+        }
+        
     };
 
     if (!hotel) {
@@ -100,58 +109,22 @@ const HotelDetail = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <ToastContainer />
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
             <div className="flex flex-col lg:flex-row gap-6">
-                <div className="flex-1">
-                    {/* Hotel Information */}
-                    <div className="bg-[#0B192C] shadow-lg rounded-lg p-6 text-white mb-6">
-                        <div>
-                            <div className="text-3xl font-extrabold mb-2">{hotel.hotelName}</div>
-                            <div className="flex items-center space-x-2 mb-4">
-                                {Array(hotel.hotelStar).fill("⭐").map((star, index) => (
-                                    <span key={index} className="text-yellow-400 text-2xl">{star}</span>
-                                ))}
-                            </div>
-                            <p className="text-sm leading-relaxed mb-4">{hotel.hotelDescription}</p>
-                            <div className="flex space-x-2 mt-2">
-                                {hotel.hotelTags.map((tag, index) => (
-                                    <div key={index} className="bg-[#FF6500] text-white py-3 px-4 rounded-lg text-lg font-semibold shadow-md">
-                                        {tag}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                    {/* Hotel Images Grid */}
-                    <div className="mb-6">
-                        <div className="grid grid-cols-1 mb-4">
-                            {/* Full-width Image */}
-                            <div className="relative overflow-hidden rounded-lg shadow-lg">
-                                <img
-                                    src={hotel.hotelImages[0]}  // Assuming the first image is the horizontal one
-                                    alt="Hotel Image 1"
-                                    className="w-full h-[400px] object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            {/* Remaining Images in Grid */}
-                            {hotel.hotelImages.slice(1).map((image, index) => (
-                                <div key={index + 1} className="relative overflow-hidden rounded-lg shadow-lg">
-                                    <img
-                                        src={image}
-                                        alt={`Hotel Image ${index + 2}`}  // Adjusted for indexing
-                                        className="w-full h-[300px] object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
+                <HotelInformation hotel={hotel} />
                 {/* Right Column: Booking Section */}
-                <div className="lg:w-1/3">
+                <div className="lg:w-[40%]">
                     <div className="bg-[#1E3E62] shadow-lg rounded-lg p-6">
                         <h2 className="text-2xl font-bold mb-6 text-center text-[#FF6500]">Book Your Stay</h2>
 
@@ -209,7 +182,7 @@ const HotelDetail = () => {
                                                 </div>
                                                 <button
                                                     onClick={() => handleAvailability(index, roomDetails)}
-                                                    className="w-full bg-[#FF6500] text-white py-2 rounded-lg shadow-md font-semibold transition-colors hover:bg-[#D85000] mb-4"
+                                                    className="w-[30%] bg-[#0a192c] text-white py-2 rounded-lg shadow-md font-semibold transition-colors hover:bg-[#D85000] mb-4"
                                                 >
                                                     Check Availability
                                                 </button>
@@ -219,7 +192,7 @@ const HotelDetail = () => {
 
                                     {roomDetails.totalCost > 0 && (
                                         <div className="mt-4 text-green-400 font-semibold">
-                                            Total Cost for {roomType}: ${roomDetails.totalCost}
+                                            Total Cost for {roomType}: ₹{roomDetails.totalCost}
                                         </div>
                                     )}
                                 </div>
@@ -228,7 +201,7 @@ const HotelDetail = () => {
 
                         <div className="mt-8 text-center">
                             <div className="text-2xl font-bold mb-4 text-white">
-                                Grand Total: ${grandTotal > 0 ? grandTotal : 0}
+                                Grand Total: ₹{grandTotal > 0 ? grandTotal : 0}
                             </div>
                             <button
                                 onClick={handleBookNow}
@@ -247,8 +220,22 @@ const HotelDetail = () => {
                             </button>
                         </Link>
                     )}
+                    {/* Room Types and Details */}
+                    <div className="bg-[#0a192ce3] mt-5 p-6 rounded-lg shadow-lg">
+                        <h2 className="text-2xl font-bold text-[#ffffff] mb-4">Room Types</h2>
+                        {hotel.hotelRoomsDetail.map((room, index) => (
+                            <div key={index} className="mb-4">
+                                <h3 className="text-xl font-semibold text-[#ff6500] mb-2">{room.roomType}</h3>
+                                <p className="text-md text-[#ffffff]">Details: {room.roomDetail}</p>
+                                <p className="text-md text-[#ffffff]">Price per day: ₹{room.pricePerDay}</p>
+                                <p className="text-md text-[#ffffff]">Total rooms: {room.totalRooms}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
+            <br />
+            <Comment />
         </div>
     );
 };

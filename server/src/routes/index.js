@@ -3,5 +3,6 @@ module.exports = {
     Auth : require('./auth'),
     Admin : require('./admin'),
     Hotels : require("./hotel"),
-    Booking : require('./booking')
+    Booking : require('./booking'),
+    User : require("./user")
 };
