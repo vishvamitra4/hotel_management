@@ -39,7 +39,6 @@ class FetchHotels extends Base {
     async fetchHotelsById() {
         const _id = this.ctx.params._id;
 
-        // Validate the _id
         if (!mongoose.Types.ObjectId.isValid(_id)) {
             this.ctx.body = {
                 success: false,
@@ -49,7 +48,7 @@ class FetchHotels extends Base {
         }
 
         try {
-            // Use lean() to return a plain JavaScript object instead of a Mongoose document
+            // lean() to return a plain JavaScript object instead of a Mongoose document
             const hotel = await this.models.Hotel.findById(_id).lean();
 
             if (hotel) {

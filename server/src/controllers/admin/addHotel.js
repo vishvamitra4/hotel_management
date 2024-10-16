@@ -25,6 +25,7 @@ class AddHotel extends Base {
         };
     };
 
+    // adding a particular hotel..
     async addHotel() {
   
         const { value, error } = Validation.Hotel.Hotel.hotelSchema.validate(this.ctx.request.body);

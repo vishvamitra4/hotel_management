@@ -16,7 +16,7 @@ class AddComment extends Base {
         const { description } = this.ctx.request.body;
 
         if (!hotelId || !userId) {
-            this.throwError("404", "Not Found..");
+            this.throwError("404", "Please Login First");
         };
 
         try {

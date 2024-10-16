@@ -1,7 +1,7 @@
 import React from "react";
 import { UserContext } from "../contexts/user/userContext";
 import axios from "axios";
-import {toast} from "react-toastify";
+import { toast , ToastContainer } from "react-toastify";
 
 function AllBooking() {
     const { user } = React.useContext(UserContext);
@@ -19,11 +19,11 @@ function AllBooking() {
 
     const fetchBookings = async () => {
         try {
-            const query = new URLSearchParams(filter).toString(); 
-            const { data } = await axios(`/fetch/booking/${user._id}?${query}`);
+            const query = new URLSearchParams(filter).toString();
+            const { data } = await axios(`/fetch/booking/${user?._id}?${query}`);
             setFilteredData(data.data);
         } catch (e) {
-            alert(e.response.data.error.message);
+            toast.error(e.response.data.error.message);
         }
     };
 
@@ -52,9 +52,10 @@ function AllBooking() {
 
     return (
         <div className="p-6 w-[800px] mt-5 mb-[20rem] bg-white text-black shadow-md rounded-lg">
+            
             <h1 className="text-2xl font-bold mb-4 text-[#FF6500]">All Bookings</h1>
 
-        
+
             <div className="flex flex-col mb-6">
                 <div className="mb-4">
                     <label className="block text-sm font-semibold mb-2" htmlFor="hotelName">Hotel Name</label>
@@ -101,7 +102,7 @@ function AllBooking() {
                 </button>
             </div>
 
-    
+
             {filteredData.length > 0 ? (
                 filteredData.map((booking, index) => (
                     <div
@@ -137,7 +138,7 @@ function AllBooking() {
                             </div>
                         </div>
 
-                    
+
                         {expandedIndex === index && (
                             <div className="mt-4 border-t pt-2" style={{ borderTopColor: "#FF6500" }}>
                                 <h3 className="font-semibold">Booking Details:</h3>

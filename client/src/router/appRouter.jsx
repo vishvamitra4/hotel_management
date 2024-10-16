@@ -9,12 +9,12 @@ import HotelDetail from "../components/hotelDetail";
 import ProtectedRoute from "./protectedRoutes/protectedRoute";
 import HotelForm from "../components/hotelForm";
 import UpdateUserForm from "../components/updateUserForm";
-import AllUsers from "../components/allUsers";
 import CheckOut from "../views/user/checkOut";
 import Layout from "../layout";
 
 function AppRouter() {
     const userToken = window.localStorage.getItem("userToken");
+    const isAdmin = localStorage.getItem("isAdmin");
 
     return (
         <Routes>
@@ -36,7 +36,7 @@ function AppRouter() {
                         </>
                     )
                 }
-                <Route path="/admin/*" element={userToken ? <AdminProfile /> : <Navigate to="/login" />} />
+                <Route path="/admin/*" element={userToken && isAdmin == "true" ? <AdminProfile /> : <Navigate to="/login" />} />
 
                 <Route element={<ProtectedRoute isAdmin={"true"} />}>
                     <Route path="/profile/admin" element={<AdminProfile />} />

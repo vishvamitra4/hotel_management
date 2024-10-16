@@ -1,25 +1,10 @@
-const Base = require("../base");
-class CancelBooking extends Base {
+const Booking = require('./booking');
+class CancelBooking extends Booking {
     constructor(ctx, next) {
         super(ctx, next);
         this._beforeMethod = {
             "cancelBooking": ["validateUser"]
         }
-    };
-
-    // getting all dates between checkin to checkout..
-    getDateRange(checkIn, checkOut) {
-        const dateArray = [];
-        let currDate = new Date(checkIn); // Parse checkIn to Date object
-        const checkOutDate = new Date(checkOut); // Parse checkOut to Date object
-
-        while (currDate < checkOutDate) { // Not including the checkout date
-            dateArray.push(new Date(currDate)); // Push a copy of the current date
-            // Increment the current date by 1 day
-            currDate.setDate(currDate.getDate() + 1);
-        }
-
-        return dateArray;
     };
 
     // cancel bookings...
@@ -32,9 +17,7 @@ class CancelBooking extends Base {
         if (!bookingId) {
             this.throwError("404", "Booking Not Found!");
         };
-        // fetching the booking...
         const booking = await this.models.Booking.findOne({ _id: bookingId });
-        // updating the bookinstatus..
         try {
             await this.models.Booking.updateOne(
                 { _id: bookingId },

@@ -9,17 +9,13 @@ import LandingPage from "../components/landingPage";
 function Home() {
   const [hotels, setHotels] = React.useState([]);
 
-  // Function to fetch hotels with filters
+
   const fetchHotels = async (filters = {}) => {
     try {
       const { search, sortBy, value } = filters;
       const query = {};
-
-      // Dynamically add filters to the query object
       if (search) query.search = search;
       if (sortBy && value) query[sortBy] = value;
-
-      // Convert the query object into a query string
       const queryString = new URLSearchParams(query).toString();
       
 
@@ -31,7 +27,7 @@ function Home() {
   };
 
   React.useEffect(() => {
-    fetchHotels(); // Fetch all hotels initially
+    fetchHotels(); 
   }, []);
 
   const allHotels = hotels.map((item, index) => {

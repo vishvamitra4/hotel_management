@@ -2,8 +2,8 @@ const Joi = require('joi');
 const constants = require('../../models/booking/constants');
 
 const bookingValidationSchema = Joi.object({
-    bookingUser: Joi.string().required(),  // MongoDB ObjectId for User
-    bookingHotel: Joi.string().required(), // MongoDB ObjectId for Hotel
+    bookingUser: Joi.string().required(),
+    bookingHotel: Joi.string().required(),
     bookingDetail: Joi.array().items(
         Joi.object({
             selectedRoomType: Joi.string().required(),  // room type is a string and required

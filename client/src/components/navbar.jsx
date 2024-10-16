@@ -11,6 +11,7 @@ const Navbar = () => {
     const [flag , setFlag] = React.useState(false);
 
     const handleLogout = async (e) => {
+        e.preventDefault();
         try {
             await axios.post("/logout");
             localStorage.clear();

@@ -1,30 +1,16 @@
-const Base = require("../base");
 const validation = require("../../validations");
 const { default: mongoose } = require("mongoose");
+const Booking = require('./booking');
 
-class BookHotel extends Base {
+class BookHotel extends Booking {
     constructor(ctx, next) {
         super(ctx, next);
         this._beforeMethod = {
             "bookHotel": ["validateUser"]
         };
     }
-    getDateRange(checkIn, checkOut) {
-        const dateArray = [];
-        let currDate = new Date(checkIn);
-        const checkOutDate = new Date(checkOut);
-
-        while (currDate < checkOutDate) { 
-            dateArray.push(new Date(currDate));
-        
-            currDate.setDate(currDate.getDate() + 1);
-        }
-
-        return dateArray;
-    }
 
     async updateBookedDates(hotelId, selectedRoomType, datesToBook, numRooms) {
-        console.log({ hotelId, selectedRoomType, datesToBook, numRooms });
 
         // finding the existing hotelRoomdetail of a particular roomtype roomtype in hotel...
         const hotel = await this.models.Hotel.findOne(

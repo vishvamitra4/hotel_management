@@ -1,26 +1,16 @@
-const Base = require("../base");
+const Booking = require('./booking');
 
-class CheckingRoomAvailability extends Base {
+class CheckingRoomAvailability extends Booking {
     constructor(ctx, next) {
         super(ctx, next);
     };
 
-    // getting all dates between checkin to checkout..
-    getDateRange(checkIn, checkOut) {
-        const dateArray = [];
-        let currDate = new Date(checkIn);
-        const checkOutDate = new Date(checkOut); 
-
-        while (currDate < checkOutDate) {
-            dateArray.push(new Date(currDate)); 
-            currDate.setDate(currDate.getDate() + 1);
-        }
-
-        return dateArray;
-    };
-
     async checkingRoomAvailability() {
         const { checkIn, checkOut, roomType, hotelId, numRooms } = this.ctx.request.body;
+
+        if(!checkIn || !checkOut || !roomType || !hotelId || !numRooms){
+            this.throwError("404" , "requested data is not completed..")
+        }
         // finding hotel..
         const hotel = await this.models.Hotel.findOne(
             { _id: hotelId, 'hotelRoomsDetail.roomType': roomType },

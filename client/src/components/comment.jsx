@@ -12,10 +12,11 @@ function Comment() {
 
     const addComment = async () => {
         try {
-            const { data } = await axios.post(`/add/comment/${user._id}/${hotel._id}`, { description: comment });
+            const { data } = await axios.post(`/add/comment/${user?._id}/${hotel?._id}`, { description: comment });
             toast.success(data.message);
             location.reload();
         } catch (e) {
+            console.log(e);
             toast.error(e.response.data.error.message);
         }
     };

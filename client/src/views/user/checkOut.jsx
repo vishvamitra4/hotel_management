@@ -3,7 +3,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { BookingDataContext } from "../../contexts/booking/bookingDataContext";
 import { FaBed, FaCalendarAlt } from "react-icons/fa";
 import axios from "axios";
-import {toast} from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
 function CheckOut() {
     const { bookingData, grandTotal, setBookingData, setGrandTotal } = React.useContext(BookingDataContext);
@@ -58,6 +58,7 @@ function CheckOut() {
 
     return (
         <div className="min-h-screen p-8 bg-gray-100 flex flex-col items-center">
+            
             <h1 className="text-3xl font-bold text-[#FF6500] mb-8">Checkout</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-7xl">

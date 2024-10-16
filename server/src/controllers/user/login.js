@@ -18,12 +18,9 @@ class Login extends Base {
         // cheking whether input email is present or not...
         const user = await this.models.User.findOne({ userEmail: value.userEmail });
         if (user && user.userStatus === "active") {
-            // checking the password..
             const isOkay = await user.verifyUserPassword(value.userPassword);
             if (isOkay) {
-                // generating the token here..
                 const token = jwt.sign({_id : user._id , userEmail : value.userEmail} , this.config["jwt"]["secretKey"] , {});
-                // setting the cookies here..
                 this.ctx.cookies.set("userToken" , token);
                 this.ctx.body = {
                     success: true,

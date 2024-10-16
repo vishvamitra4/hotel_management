@@ -1,6 +1,6 @@
 const {CancelBooking} = require("../booking");
 
-class FetchUsers extends CancelBooking {
+class FetchUsers extends CancelBooking { // extending cancleBooking properties..
     constructor(ctx, next) {
         super(ctx, next);
         this._beforeMethod = {
@@ -9,6 +9,7 @@ class FetchUsers extends CancelBooking {
         };
     };
 
+    // fetchin user detail...
     async fetchUsers() {
         const { userName, userEmail } = this.ctx.query;
         let filter = { userEmail: { $ne: this.config.admin.email } };
@@ -31,11 +32,12 @@ class FetchUsers extends CancelBooking {
         };
     };
 
+    // toggle user Status...
     async toggleUserStatus() {
         const _id = this.ctx.params._id;
-        // fetching all bookings made by that user..
+
         const bookings = await this.models.Booking.find({bookingUser : _id , bookingStatus : {$eq : "confirmed"}});
-        for(const B of bookings){ // cancelling all bookings...
+        for(const B of bookings){ 
             const {_id} = B;
             await this.cancelBooking(_id); // cancelBooking method..
         }

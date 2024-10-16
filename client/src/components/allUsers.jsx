@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const UserTable = () => {
-    // Initial data
     const [users, setUsers] = useState([]);
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
@@ -18,20 +18,20 @@ const UserTable = () => {
     };
 
     useEffect(() => {
-        fetchUsers(); // Fetch all users initially
+        fetchUsers();
     }, []);
 
     const handleSearch = () => {
-        fetchUsers(); // Fetch filtered users based on inputs
+        fetchUsers(); 
     };
 
     const toggleStatus = async (_id) => {
         try {
             const { data } = await axios.put(`/toggle/user/status/${_id}`);
-            alert(data.message);
-            fetchUsers(); // Reload users after status change without reloading the page
+            toast.success(data.message);
+            fetchUsers(); 
         } catch (e) {
-            alert(e.response.data.error.message);
+            toast.error(e.response.data.error.message);
         }
     };
 
@@ -48,7 +48,7 @@ const UserTable = () => {
             <td className="px-4 py-2">
                 <button
                     className="px-4 py-2 bg-[#FF6500] text-white rounded hover:bg-[#FF6500D0] transition duration-200"
-                    onClick={() => toggleStatus(user._id)}
+                    onClick={() => toggleStatus(user?._id)}
                 >
                     Toggle Status
                 </button>
