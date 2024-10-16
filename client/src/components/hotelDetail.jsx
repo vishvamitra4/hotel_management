@@ -213,13 +213,7 @@ const HotelDetail = () => {
                         </div>
                     </div>
 
-                    {isAdmin && (
-                        <Link to={`/hotel/${_id}/update`}>
-                            <button className="w-full bg-[#123c07] mt-5 text-white py-3 rounded-lg shadow-md font-semibold transition-colors">
-                                Update Hotel Detail
-                            </button>
-                        </Link>
-                    )}
+
                     {/* Room Types and Details */}
                     <div className="bg-[#0a192ce3] mt-5 p-6 rounded-lg shadow-lg">
                         <h2 className="text-2xl font-bold text-[#ffffff] mb-4">Room Types</h2>

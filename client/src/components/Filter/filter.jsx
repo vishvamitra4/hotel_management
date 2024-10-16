@@ -35,7 +35,7 @@ const Filter = ({ onFilter }) => {
   };
 
   return (
-    <form onSubmit={handleFilter} className="flex justify-center items-center bg-gray-100 p-4 rounded-lg shadow-md space-x-4">
+    <form onSubmit={handleFilter} className="flex justify-center w-[100%] items-center bg-gray-100 p-4 rounded-lg shadow-md space-x-4">
       <SearchInput value={search} onChange={(e) => setSearch(e.target.value)} />
       <Dropdown label="Search By" options={options} value={sortBy} onChange={(e) => setSortBy(e.target.value)} />
       {sortBy && renderInputField()}

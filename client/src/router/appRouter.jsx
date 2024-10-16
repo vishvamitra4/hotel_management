@@ -15,8 +15,6 @@ import Layout from "../layout";
 
 function AppRouter() {
     const userToken = window.localStorage.getItem("userToken");
-    const location = useLocation();
-    console.log(location.search);
 
     return (
         <Routes>
@@ -38,11 +36,8 @@ function AppRouter() {
                         </>
                     )
                 }
-
-                {/* Redirect to login for /admin paths if not authenticated */}
                 <Route path="/admin/*" element={userToken ? <AdminProfile /> : <Navigate to="/login" />} />
 
-                {/* Protected Route for Admin */}
                 <Route element={<ProtectedRoute isAdmin={"true"} />}>
                     <Route path="/profile/admin" element={<AdminProfile />} />
                     <Route path="/profile/admin/:subpage?" element={<AdminProfile />} />

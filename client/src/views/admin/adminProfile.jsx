@@ -7,11 +7,12 @@ import { UserContext } from "../../contexts/user/userContext";
 import { BallTriangle } from 'react-loader-spinner';
 import AllUsers from "../../components/allUsers";
 import AllBooking from "../../components/allBooking";
+import AllHotel from "../../components/allhotels";
 
 function AdminProfile() {
     let { subpage } = useParams();
     if (subpage == undefined) {
-        subpage = "userprofile";
+        subpage = "allhotels";
     };
 
     const { user } = useContext(UserContext);
@@ -35,6 +36,7 @@ function AdminProfile() {
                 {subpage == "userprofile" && <UserDetails user={user} />}
                 {subpage == "allusers" && <AllUsers />}
                 {subpage == "allbooking" && <AllBooking />}
+                {subpage == "allhotels" && <AllHotel />}
             </div>
         </div>
     )

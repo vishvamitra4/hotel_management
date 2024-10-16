@@ -23,13 +23,13 @@ function hotelInformation({ hotel }) {
                 </div>
             </div>
 
-            {/* Hotel Image Swiper */}
+            
             <div className="mb-6">
                 <div className="grid grid-cols-1 mb-4">
-                    {/* Full-width Image */}
+                    
                     <div className="relative overflow-hidden rounded-lg shadow-lg">
                         <img
-                            src={hotel.hotelImages[0]}  // Assuming the first image is the horizontal one
+                            src={hotel.hotelImages[0]}  
                             alt="Hotel Image 1"
                             className="w-full h-[400px] object-cover transition-transform duration-300 ease-in-out hover:scale-110"
                         />
@@ -37,12 +37,12 @@ function hotelInformation({ hotel }) {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {/* Remaining Images in Grid */}
+                   
                     {hotel.hotelImages.slice(1).map((image, index) => (
                         <div key={index + 1} className="relative overflow-hidden rounded-lg shadow-lg">
                             <img
                                 src={image}
-                                alt={`Hotel Image ${index + 2}`}  // Adjusted for indexing
+                                alt={`Hotel Image ${index + 2}`}  
                                 className="w-full h-[300px] object-cover transition-transform duration-300 ease-in-out hover:scale-110"
                             />
                         </div>

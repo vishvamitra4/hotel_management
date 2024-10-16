@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { Navigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const HotelForm = () => {
     const { _id } = useParams();
@@ -151,9 +152,9 @@ const HotelForm = () => {
                 });
                 const { data } = await axios.put(`/update/hotel/${_id}`, formData);
                 setFlag(true);
-                alert(data.message);
+                toast.success(data.message);
             } catch (e) {
-                alert(e.response.data.error.message);
+                toast.error(e.response.data.error.message);
             }
         } else {
             alert('Please put the input in correct format...');
@@ -161,7 +162,7 @@ const HotelForm = () => {
     };
 
     if (flag) {
-        return <Navigate to={`/hotel/${_id}`} />;
+        return <Navigate to={`/profile/admin/allhotels`} />;
     }
 
     const handleSubmit = async (e) => {
@@ -179,12 +180,12 @@ const HotelForm = () => {
         if (Object.keys(newErrors).length === 0) {
             try {
                 const { data } = await axios.post("/new/hotel", formData);
-                alert(data.message);
+                toast.success(data.message);
             } catch (e) {
-                alert(e.response.data.error.message);
+                toast(e.response.data.error.message);
             }
         } else {
-            alert('Please put the input in correct format...');
+            toast.error('Please put the input in correct format...' , newErrors);
         };
     };
 

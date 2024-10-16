@@ -30,7 +30,7 @@ const Navbar = () => {
     return (
         <nav className="bg-[#0B192C] text-white pr-[5rem] pl-[5rem] p-[2rem] shadow-lg">
             <ul className="flex justify-between items-center">
-                {/* Left side: Home */}
+                
                 <li>
                     <Link
                         to="/"
@@ -40,7 +40,7 @@ const Navbar = () => {
                     </Link>
                 </li>
 
-                {/* Right side: User and Authentication Links */}
+               
                 <div className="flex space-x-6">
                     {
                         user && (
